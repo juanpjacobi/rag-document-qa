@@ -23,27 +23,61 @@ Juan Pablo Jacobi. Perfil híbrido backend + ML/IA.
 
 RAG es el caso de uso empresarial más demandado de IA generativa hoy.
 Complementa el perfil: diabetes = ML Engineer, RAG = AI Engineer.
-Stack gratuito al 100% (sin tarjeta de crédito).
 
 ## Proyecto: RAG Q&A sobre documentos PDF
 
-El usuario carga o elige un PDF, hace preguntas en lenguaje natural,
+El usuario carga un PDF, hace preguntas en lenguaje natural,
 el sistema responde basándose en el contenido real del documento.
 
-## Stack definido (todo gratuito)
+## Estado actual — Backend COMPLETADO ✅
 
-| Pieza | Tecnología | Por qué |
+### Stack final implementado
+
+| Pieza | Tecnología | Notas |
 |---|---|---|
-| LLM | Google Gemini API | tier gratuito, sin tarjeta |
-| Embeddings | sentence-transformers (HuggingFace) | corre local, sin costo |
-| Vector DB | ChromaDB | local, simple, ideal para empezar |
-| API | FastAPI | ya lo domina |
-| Deploy | Render | ya lo domina |
+| LLM | Google Gemini 2.5 Flash | SDK: google-genai==1.9.0 |
+| Embeddings | sentence-transformers (all-MiniLM-L6-v2) | corre local, sin costo |
+| Vector DB | ChromaDB | persistente en disco |
+| API | FastAPI | 4 endpoints |
+| CI | GitHub Actions | pytest en cada push |
+| Deploy | Railway (pago) | backend en producción |
 
-## Roadmap personal 2025-2026 (reordenado)
+### URLs de producción
+- **Backend:** https://rag-document-qa-production-c235.up.railway.app
+- **Docs interactivas:** https://rag-document-qa-production-c235.up.railway.app/docs
+- **Repo:** https://github.com/juanpjacobi/rag-document-qa
+
+### Endpoints implementados
+- `GET /health`
+- `POST /upload` — sube y indexa un PDF
+- `POST /ask` — pregunta sobre un documento
+- `GET /documents` — lista PDFs indexados
+
+### Decisiones técnicas importantes
+- **Chunking por palabras** (150 palabras, 20 overlap) — no por caracteres para no cortar palabras
+- **13 tests** pasando (pytest) — lógica de chunking + endpoints mockeados
+- **Manejo de errores**: 429 cuando Gemini se queda sin quota, 404 si no hay chunks, 400 para inputs inválidos
+- **ChromaDB es efímero en Railway** — datos se pierden en restart, hay que re-subir el PDF (aceptable para demo)
+
+### Lo que aprendimos probando
+- Preguntas con vocabulario exacto del documento → responde bien
+- Preguntas con lenguaje coloquial ≠ vocabulario del doc → "No encontré info" (gap semántico)
+- Mejora futura: query rewriting antes del retrieval
+
+## Próximo paso — Frontend Angular 19
+
+**Objetivo:** interfaz visual para el portfolio (igual que diabetes).
+
+**Diseño planeado:**
+- Upload de PDF con drag & drop
+- Interfaz tipo chat (historial de preguntas/respuestas)
+- Indicador "pensando..." mientras espera Gemini
+- Deploy en Netlify con auto-deploy en push
+
+## Roadmap personal 2025-2026
 
 1. ✅ Proyecto diabetes (completado)
-2. 🔄 Proyecto RAG — en curso
+2. 🔄 Proyecto RAG — backend completo, frontend pendiente
 3. MLflow / MLOps práctico
 4. Agentes IA
 5. MCP (cuando el mercado lo pida más)
