@@ -1,0 +1,24 @@
+# Secrets
+.env
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Vector DB (datos locales, no van al repo)
+chroma_db/
+
+# PDFs subidos por el usuario
+pdfs/
+*.pdf
+
+# Tests
+.pytest_cache/
+
+# Scripts de diagnóstico local
+test_chunks.py
+test_models.py

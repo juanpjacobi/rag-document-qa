@@ -1,0 +1,19 @@
+fastapi==0.115.0
+uvicorn==0.30.6
+python-multipart==0.0.9
+
+# PDF parsing
+pypdf==4.3.1
+
+# Embeddings (corre local, sin costo)
+sentence-transformers==3.0.1
+
+# Vector DB
+chromadb==0.5.15
+
+# LLM
+google-genai==1.9.0
+
+# Utils
+python-dotenv==1.0.1
+pydantic==2.8.2
