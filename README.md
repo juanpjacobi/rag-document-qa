@@ -2,7 +2,7 @@
 
 A document question-answering API built with RAG (Retrieval-Augmented Generation). Upload a PDF, ask questions in natural language, and get answers grounded in the document content.
 
-**Live demo:** _coming soon_
+**Live demo:** https://rag-document-qa-production-c235.up.railway.app/docs
 
 ---
 
